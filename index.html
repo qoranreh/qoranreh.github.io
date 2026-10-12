@@ -34,7 +34,7 @@
   a:hover { text-decoration: underline; }
 
   /* ---------- Intro ---------- */
-  .intro { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: center; }
+  .intro { display: grid; grid-template-columns: 1fr 200px; gap: 48px; align-items: center; }
   h1 { font-size: 2.4rem; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 4px; line-height: 1.2; }
   .role { color: var(--muted); margin: 0 0 20px; }
   .intro p { margin: 0 0 14px; }
@@ -45,7 +45,7 @@
   }
   .links a:hover { text-decoration: none; color: var(--accent); }
 
-  .photo { width: 220px; height: 220px; border-radius: 50%; overflow: hidden; background: var(--chip); justify-self: end; }
+  .photo { width: 200px; aspect-ratio: 1116 / 1474; overflow: hidden; background: var(--chip); justify-self: end; }
   .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .photo .initials { width: 100%; height: 100%; display: none; align-items: center; justify-content: center; font-size: 3.2rem; font-weight: 600; color: var(--muted); }
   .photo.missing img { display: none; }
@@ -79,7 +79,7 @@
   @media (max-width: 680px) {
     main { padding: 40px 16px 56px; }
     .intro { grid-template-columns: 1fr; gap: 24px; }
-    .photo { width: 150px; height: 150px; justify-self: start; order: -1; }
+    .photo { width: 150px; justify-self: start; order: -1; }
     h1 { font-size: 2rem; }
     .item { grid-template-columns: 1fr; }
     .date { text-align: left; }
@@ -106,7 +106,7 @@
         where I study robot learning and VLA models.
       </p>
       <div class="links">
-        <a href="mailto:qoranreh@gmail.com">Email</a>
+        <a href="mailto:qoranreh@gachon.ac.kr">qoranreh@gachon.ac.kr</a>
         <a href="https://github.com/qoranreh">GitHub</a>
         <a href="cv.pdf">CV</a>
       </div>
@@ -178,18 +178,6 @@
           <li>Responsible for object perception and YOLO fine-tuning; participated in final node integration and mission code development.</li>
         </ul>
       </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>Teaching</h2>
-    <div class="item">
-      <div><span class="title">Teaching Assistant</span><br><span class="org">AI-Centered World Program, Gachon University</span></div>
-      <div class="date">Sept. 2025 – June 2026</div>
-    </div>
-    <div class="item">
-      <div><span class="title">Teaching Assistant</span><br><span class="org">Introduction to AI Programming, Gachon University</span></div>
-      <div class="date">Mar. 2026 – June 2026</div>
     </div>
   </section>
 
