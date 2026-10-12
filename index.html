@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hayeon Lee</title>
+<meta name="description" content="Hayeon Lee — undergraduate student in Artificial Intelligence at Gachon University, interested in robot learning and Vision-Language-Action models.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --text: #1d1d1f;
+    --muted: #6e6e73;
+    --line: #e5e5ea;
+    --accent: #2457c5;
+    --bg: #ffffff;
+    --chip: #f2f4f8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --text: #ececf0; --muted: #a1a1aa; --line: #2c2c31; --accent: #7aa2ff; --bg: #121214; --chip: #1e1f24;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px; line-height: 1.65;
+  }
+  main { max-width: 900px; margin: 0 auto; padding: 72px 24px 80px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ---------- Intro ---------- */
+  .intro { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: center; }
+  h1 { font-size: 2.4rem; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 4px; line-height: 1.2; }
+  .role { color: var(--muted); margin: 0 0 20px; }
+  .intro p { margin: 0 0 14px; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .links a {
+    font-size: 0.88rem; font-weight: 500; padding: 6px 14px; border-radius: 999px;
+    background: var(--chip); color: var(--text);
+  }
+  .links a:hover { text-decoration: none; color: var(--accent); }
+
+  .photo { width: 220px; height: 220px; border-radius: 50%; overflow: hidden; background: var(--chip); justify-self: end; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo .initials { width: 100%; height: 100%; display: none; align-items: center; justify-content: center; font-size: 3.2rem; font-weight: 600; color: var(--muted); }
+  .photo.missing img { display: none; }
+  .photo.missing .initials { display: flex; }
+
+  /* ---------- Sections ---------- */
+  section { margin-top: 64px; }
+  h2 {
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); margin: 0 0 20px; padding-bottom: 10px; border-bottom: 1px solid var(--line);
+  }
+  .item { display: grid; grid-template-columns: 1fr auto; column-gap: 24px; margin-bottom: 24px; }
+  .item:last-child { margin-bottom: 0; }
+  .title { font-weight: 600; }
+  .org { color: var(--text); }
+  .date { color: var(--muted); font-size: 0.88rem; white-space: nowrap; text-align: right; }
+  .detail { grid-column: 1 / -1; color: var(--muted); font-size: 0.95rem; }
+  .detail ul { margin: 6px 0 0; padding-left: 18px; }
+  .detail li { margin: 2px 0; }
+
+  .pub-title { font-weight: 600; }
+  .pub-meta { color: var(--muted); font-size: 0.92rem; }
+  .tag { display: inline-block; font-size: 0.75rem; font-weight: 600; padding: 1px 8px; border-radius: 4px; background: var(--chip); color: var(--text); margin-right: 6px; }
+
+  .skills { display: grid; grid-template-columns: 180px 1fr; gap: 10px 24px; }
+  .skills dt { font-weight: 600; }
+  .skills dd { margin: 0; color: var(--muted); }
+
+  footer { margin-top: 72px; color: var(--muted); font-size: 0.8rem; text-align: center; }
+
+  @media (max-width: 680px) {
+    main { padding: 40px 16px 56px; }
+    .intro { grid-template-columns: 1fr; gap: 24px; }
+    .photo { width: 150px; height: 150px; justify-self: start; order: -1; }
+    h1 { font-size: 2rem; }
+    .item { grid-template-columns: 1fr; }
+    .date { text-align: left; }
+    .skills { grid-template-columns: 1fr; gap: 2px; }
+    .skills dd { margin-bottom: 10px; }
+    section { margin-top: 48px; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <div class="intro">
+    <div>
+      <h1>Hayeon Lee</h1>
+      <p class="role">Undergraduate Student · Artificial Intelligence, Gachon University</p>
+      <p>
+        I am an undergraduate student in the Department of Artificial Intelligence at Gachon University.
+        My research interests lie in <b>robot learning</b> and <b>Vision-Language-Action (VLA) models</b>,
+        with a focus on multimodal AI for robotics and vision-based robot control.
+      </p>
+      <p>
+        I am currently an undergraduate research intern at <b>Seoul National University</b>, advised by Dr. Namjoon Kim,
+        where I study robot learning and VLA models.
+      </p>
+      <div class="links">
+        <a href="mailto:qoranreh@gmail.com">Email</a>
+        <a href="https://github.com/qoranreh">GitHub</a>
+        <a href="cv.pdf">CV</a>
+      </div>
+    </div>
+    <!-- Put your photo in the repo as profile.jpg (square image works best) -->
+    <div class="photo" id="photo">
+      <img src="profile.jpg" alt="Hayeon Lee" onerror="document.getElementById('photo').classList.add('missing')">
+      <div class="initials">HL</div>
+    </div>
+  </div>
+
+  <section>
+    <h2>Education</h2>
+    <div class="item">
+      <div><span class="title">Gachon University</span><br><span class="org">B.S. in Artificial Intelligence</span></div>
+      <div class="date">Mar. 2024 – Present</div>
+      <div class="detail">
+        <ul>
+          <li>GPA 4.19 / 4.5 (Class rank 31 / 235)</li>
+          <li>Academic Excellence Scholarship, National Program of Excellence in Software (2024)</li>
+          <li>Credit Exchange Program, Seoul National University</li>
+          <li>Silicon Valley AI/AX Technology Program, San Jose State University, USA (July 2026; one of 5 selected students, fully funded)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Research Experience</h2>
+    <div class="item">
+      <div><span class="title">Undergraduate Research Intern</span><br><span class="org">Seoul National University · Advisor: Dr. Namjoon Kim</span></div>
+      <div class="date">Feb. 2026 – Present</div>
+      <div class="detail">
+        <ul>
+          <li>Undergraduate research on robotics, multimodal AI, and embedded AI systems.</li>
+          <li>Studying robot learning, vision-language-action models, and AI model applications in robotics environments.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="item">
+      <div><span class="title">Undergraduate Research Assistant</span><br><span class="org">ISSR Lab, Gachon University</span></div>
+      <div class="date">May 2025 – Nov. 2025</div>
+      <div class="detail">
+        <ul>
+          <li>Undergraduate research on the Python debugger and CPython debugging environment.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Publications</h2>
+    <div class="item">
+      <div>
+        <div class="pub-title">Analysis of GDB-based CPython Debugging Environment</div>
+        <div class="pub-meta"><span class="tag">KIPS 2025</span>Korea Information Processing Society Conference · Co-author</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Projects</h2>
+    <div class="item">
+      <div><span class="title">ROS2–Gazebo Autonomous Robot Mission</span><br><span class="org">Course project, Seoul National University · <a href="https://github.com/qoranrehsnu/make_ai_robot">Code</a></span></div>
+      <div class="date">Fall 2025</div>
+      <div class="detail">
+        <ul>
+          <li>Built a robot mission system by integrating perception, planning, and localization nodes in ROS2 and Gazebo.</li>
+          <li>Responsible for object perception and YOLO fine-tuning; participated in final node integration and mission code development.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Teaching</h2>
+    <div class="item">
+      <div><span class="title">Teaching Assistant</span><br><span class="org">AI-Centered World Program, Gachon University</span></div>
+      <div class="date">Sept. 2025 – June 2026</div>
+    </div>
+    <div class="item">
+      <div><span class="title">Teaching Assistant</span><br><span class="org">Introduction to AI Programming, Gachon University</span></div>
+      <div class="date">Mar. 2026 – June 2026</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Skills</h2>
+    <dl class="skills">
+      <dt>Programming</dt><dd>Python, Java, C, Dart, Git, Linux/Ubuntu</dd>
+      <dt>AI / ML</dt><dd>PyTorch, TensorFlow, NumPy, pandas, CNN / Transformer, robot policy models, VLA models</dd>
+      <dt>Robotics</dt><dd>ROS2, Gazebo, LeRobot, RoboCasa</dd>
+      <dt>Computer Vision</dt><dd>OpenCV, YOLO fine-tuning, U-Net</dd>
+    </dl>
+  </section>
+
+  <footer>© 2026 Hayeon Lee · Last updated Oct. 2026</footer>
+</main>
+</body>
+</html>
