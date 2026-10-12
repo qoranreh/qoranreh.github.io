@@ -74,9 +74,44 @@
   .skills dt { font-weight: 600; }
   .skills dd { margin: 0; color: var(--muted); }
 
+
+  /* ---------- Current research ---------- */
+  .research-head { display: grid; grid-template-columns: 1fr auto; column-gap: 24px; margin-bottom: 10px; }
+  .research-title { font-size: 1.12rem; font-weight: 600; line-height: 1.4; }
+  .badge { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 9px; border-radius: 999px; background: var(--chip); color: var(--accent); vertical-align: middle; margin-left: 6px; }
+  .research-desc { margin: 0 0 22px; }
+  .research-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+  figure { margin: 0; }
+  video { width: 100%; height: auto; display: block; border-radius: 8px; background: #000; }
+  figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+  figcaption b { color: var(--text); font-weight: 600; }
+  .results h3 { font-size: 0.95rem; font-weight: 600; margin: 0 0 4px; }
+  .results .cap { font-size: 0.85rem; color: var(--muted); margin: 0 0 14px; }
+  .bar { margin-bottom: 14px; }
+  .bar-label { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 4px; }
+  .bar-label span:last-child { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .bar-track { height: 8px; border-radius: 999px; background: var(--chip); overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 999px; background: var(--muted); }
+  .bar.hl .bar-fill { background: var(--accent); }
+  .bar.hl .bar-label span:last-child { color: var(--accent); }
+  .results .foot { font-size: 0.8rem; color: var(--muted); margin-top: 6px; }
+  .compare-title { font-size: 0.95rem; font-weight: 600; margin: 34px 0 4px; }
+  .compare-sub { font-size: 0.85rem; color: var(--muted); margin: 0 0 14px; }
+  .compare { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .status { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 1px 7px; border-radius: 4px; margin-right: 6px; letter-spacing: 0.02em; }
+  .status.fail { background: #fdecec; color: #b42318; }
+  .status.ok { background: #e7f6ec; color: #1b7a3d; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .status.fail { background: #3a1d1d; color: #ff9b91; }
+    :root:not([data-theme="light"]) .status.ok { background: #16321f; color: #7fd69a; }
+  }
+
   footer { margin-top: 72px; color: var(--muted); font-size: 0.8rem; text-align: center; }
 
   @media (max-width: 680px) {
+    .research-grid { grid-template-columns: 1fr; }
+    .compare { grid-template-columns: 1fr; }
+    .research-head { grid-template-columns: 1fr; }
     main { padding: 40px 16px 56px; }
     .intro { grid-template-columns: 1fr; gap: 24px; }
     .photo { width: 150px; justify-self: start; order: -1; }
@@ -117,6 +152,52 @@
       <div class="initials">HL</div>
     </div>
   </div>
+
+  <section>
+    <h2>Current Research</h2>
+    <div class="research-head">
+      <div class="research-title">Cross-Embodiment Adaptation of VLA Policies: Reproducing DART on Franka Panda → xArm7<span class="badge">Ongoing</span></div>
+      <div class="date">Fall 2026 – Present</div>
+    </div>
+    <p class="research-desc">
+      I am reproducing <b>DART</b> (ECCV 2026), which adapts a Vision-Language-Action policy to a new robot from a single demonstration
+      using weight arithmetic between source- and target-finetuned models. Starting from a π0.5 policy trained on the Franka Panda (LIBERO-Spatial),
+      I generated a one-shot xArm7 demonstration with MimicGen-style trajectory retargeting, fine-tuned source and target models,
+      and evaluated the composed policy on the xArm7 across held-out tasks.
+    </p>
+
+    <div class="research-grid">
+      <figure>
+        <video src="media/demo_pair.mp4" poster="media/demo_pair.jpg" controls muted loop playsinline preload="metadata"></video>
+        <figcaption><b>One-shot demonstration pair.</b> Left: original Franka Panda demo (source). Right: retargeted xArm7 demo (target). Top: agent view, bottom: wrist camera.</figcaption>
+      </figure>
+      <div class="results">
+        <h3>Success rate on held-out tasks (xArm7)</h3>
+        <p class="cap">LIBERO-Spatial t1–t9, 180 episodes over two runs</p>
+        <div class="bar"><div class="bar-label"><span>Pretrained policy (θ<sub>0</sub>)</span><span>56%</span></div><div class="bar-track"><div class="bar-fill" style="width:56%"></div></div></div>
+        <div class="bar"><div class="bar-label"><span>One-shot fine-tuning (θ<sub>tgt</sub>)</span><span>0%</span></div><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div></div>
+        <div class="bar hl"><div class="bar-label"><span>DART (θ*, α = 0.5)</span><span>73%</span></div><div class="bar-track"><div class="bar-fill" style="width:73%"></div></div></div>
+        <p class="foot">One-shot fine-tuning overfits to the demonstration trajectory and fails on every held-out task, while the DART-composed policy outperforms both baselines.</p>
+      </div>
+    </div>
+
+    <div class="compare-title">Same held-out task, three policies</div>
+    <p class="compare-sub">“Pick up the black bowl next to the ramekin and place it on the plate” · left: agent view, right: wrist camera</p>
+    <div class="compare">
+      <figure>
+        <video src="media/t1_pretrained.mp4" poster="media/t1_pretrained.jpg" autoplay muted loop playsinline preload="metadata"></video>
+        <figcaption><span class="status fail">FAIL</span><b>Pretrained</b> — reaches for the bowl but misses the grasp.</figcaption>
+      </figure>
+      <figure>
+        <video src="media/t1_oneshot_ft.mp4" poster="media/t1_oneshot_ft.jpg" autoplay muted loop playsinline preload="metadata"></video>
+        <figcaption><span class="status fail">FAIL</span><b>One-shot FT</b> — ignores the scene and replays the demo trajectory.</figcaption>
+      </figure>
+      <figure>
+        <video src="media/t1_dart.mp4" poster="media/t1_dart.jpg" autoplay muted loop playsinline preload="metadata"></video>
+        <figcaption><span class="status ok">SUCCESS</span><b>DART</b> — picks up the bowl and places it on the plate.</figcaption>
+      </figure>
+    </div>
+  </section>
 
   <section>
     <h2>Education</h2>
