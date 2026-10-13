@@ -73,6 +73,10 @@
 
   .pub-title { font-weight: 600; }
   .pub-meta { color: var(--muted); font-size: 0.92rem; }
+  .pub-authors { font-size: 0.92rem; margin: 2px 0; }
+  .pub-authors b { font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+  .pub-link { color: var(--text); }
+  .pub-link:hover { color: var(--accent); }
   .tag { display: inline-block; font-size: 0.75rem; font-weight: 600; padding: 1px 8px; border-radius: 4px; background: var(--chip); color: var(--text); margin-right: 6px; }
 
   .skills { display: grid; grid-template-columns: 180px 1fr; gap: 10px 24px; }
@@ -290,8 +294,9 @@
     <h2>Publications</h2>
     <div class="item">
       <div>
-        <div class="pub-title">Analysis of GDB-based CPython Debugging Environment</div>
-        <div class="pub-meta"><span class="tag">KIPS 2025</span>Korea Information Processing Society Conference · Co-author</div>
+        <div class="pub-title"><a class="pub-link" href="https://koreascience.kr/article/CFKO202532554027542.page">Analysis on CPython Debugging Environment based on GDB</a></div>
+        <div class="pub-authors">Shin-Hyeok Park, Jeong-Yun Lee, <b>Hayeon Lee</b>, Hong Min</div>
+        <div class="pub-meta"><span class="tag">KIPS 2025</span>Annual Conference of the Korea Information Processing Society, pp. 503–504 · <a href="https://koreascience.kr/article/CFKO202532554027542.page">Paper</a></div>
       </div>
     </div>
   </section>
