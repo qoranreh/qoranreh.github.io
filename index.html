@@ -62,7 +62,12 @@
   .title { font-weight: 600; }
   .org { color: var(--text); }
   .date { color: var(--muted); font-size: 0.88rem; white-space: nowrap; text-align: right; }
+  .org-logo { display: block; height: 30px; width: auto; margin: 8px 0 0 auto; border-radius: 4px; }
+  .org-logo.round { height: 80px; border-radius: 50%; }
   .detail { grid-column: 1 / -1; color: var(--muted); font-size: 0.95rem; }
+  .item.big-logo > :first-child { grid-column: 1; grid-row: 1; }
+  .item.big-logo .date { grid-column: 2; grid-row: 1 / span 2; }
+  .item.big-logo .detail { grid-column: 1; grid-row: 2; }
   .detail ul { margin: 6px 0 0; padding-left: 18px; }
   .detail li { margin: 2px 0; }
 
@@ -75,16 +80,35 @@
   .skills dd { margin: 0; color: var(--muted); }
 
 
-  /* ---------- Current research ---------- */
-  .research-head { display: grid; grid-template-columns: 1fr auto; column-gap: 24px; margin-bottom: 10px; }
-  .research-title { font-size: 1.12rem; font-weight: 600; line-height: 1.4; }
-  .badge { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 9px; border-radius: 999px; background: var(--chip); color: var(--accent); vertical-align: middle; margin-left: 6px; }
+  /* ---------- Current research (collapsible card) ---------- */
+  .rcard { border: 1px solid var(--line); border-radius: 14px; padding: 20px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .rcard:focus { outline: none; }
+  .rcard:focus-visible { outline: 1px solid var(--muted); outline-offset: 3px; }
+  .rsummary { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 26px; align-items: center; transition: grid-template-columns .45s ease; }
+  .rcard.open .rsummary { grid-template-columns: 440px minmax(0, 1fr); }
+  .rthumb { position: relative; border-radius: 10px; overflow: hidden; background: var(--chip); aspect-ratio: 512 / 282; }
+  .rthumb img, .rthumb video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; border-radius: 0; background: transparent; }
+  .rthumb video { opacity: 0; transition: opacity .25s; }
+  .rthumb video.playing { opacity: 1; }
+  .rmeta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--muted); margin-bottom: 6px; }
+  .badge { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 9px; border-radius: 999px; background: var(--chip); color: var(--text); }
+  .research-title { font-size: 1.12rem; font-weight: 600; line-height: 1.4; margin: 0 0 10px; }
+  .rsummary p { margin: 0 0 12px; font-size: 0.97rem; }
+  .rkey { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.88rem; color: var(--muted); }
+  .rkey b { color: var(--text); font-variant-numeric: tabular-nums; }
+  .rhint { margin-top: 14px; font-size: 0.8rem; color: var(--muted); }
+
+  .rmore { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s ease; }
+  .rcard.open .rmore { grid-template-rows: 1fr; }
+  .rmore-inner { overflow: hidden; min-height: 0; }
+  .rmore-content { padding-top: 24px; margin-top: 20px; border-top: 1px solid var(--line); }
   .research-desc { margin: 0 0 22px; }
   .research-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
   figure { margin: 0; }
   video { width: 100%; height: auto; display: block; border-radius: 8px; background: #000; }
   figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 8px; line-height: 1.5; }
   figcaption b { color: var(--text); font-weight: 600; }
+  .results { max-width: 560px; }
   .results h3 { font-size: 0.95rem; font-weight: 600; margin: 0 0 4px; }
   .results .cap { font-size: 0.85rem; color: var(--muted); margin: 0 0 14px; }
   .bar { margin-bottom: 14px; }
@@ -92,10 +116,9 @@
   .bar-label span:last-child { font-weight: 600; font-variant-numeric: tabular-nums; }
   .bar-track { height: 8px; border-radius: 999px; background: var(--chip); overflow: hidden; }
   .bar-fill { height: 100%; border-radius: 999px; background: var(--muted); }
-  .bar.hl .bar-fill { background: var(--accent); }
-  .bar.hl .bar-label span:last-child { color: var(--accent); }
+  .bar.hl .bar-fill { background: var(--text); }
   .results .foot { font-size: 0.8rem; color: var(--muted); margin-top: 6px; }
-  .compare-title { font-size: 0.95rem; font-weight: 600; margin: 34px 0 4px; }
+  .compare-title { font-size: 0.95rem; font-weight: 600; margin: 30px 0 4px; }
   .compare-sub { font-size: 0.85rem; color: var(--muted); margin: 0 0 14px; }
   .compare { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   .status { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 1px 7px; border-radius: 4px; margin-right: 6px; letter-spacing: 0.02em; }
@@ -105,19 +128,31 @@
     :root:not([data-theme="light"]) .status.fail { background: #3a1d1d; color: #ff9b91; }
     :root:not([data-theme="light"]) .status.ok { background: #16321f; color: #7fd69a; }
   }
+  @media (prefers-reduced-motion: reduce) { .rmore, .rsummary, .rthumb { transition: none; } }
+
+
+  /* ---------- Scroll reveal ---------- */
+  .js-reveal section { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+  .js-reveal section.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .js-reveal section { opacity: 1; transform: none; transition: none; } }
 
   footer { margin-top: 72px; color: var(--muted); font-size: 0.8rem; text-align: center; }
 
   @media (max-width: 680px) {
+    .rcard { padding: 14px; }
+    .rsummary, .rcard.open .rsummary { grid-template-columns: 1fr; gap: 16px; }
+    .rthumb { width: 60%; transition: width .45s ease; }
+    .rcard.open .rthumb { width: 100%; }
     .research-grid { grid-template-columns: 1fr; }
     .compare { grid-template-columns: 1fr; }
-    .research-head { grid-template-columns: 1fr; }
     main { padding: 40px 16px 56px; }
     .intro { grid-template-columns: 1fr; gap: 24px; }
     .photo { width: 150px; justify-self: start; order: -1; }
     h1 { font-size: 2rem; }
     .item { grid-template-columns: 1fr; }
     .date { text-align: left; }
+    .org-logo { margin-left: 0; }
+    .item.big-logo > :first-child, .item.big-logo .date, .item.big-logo .detail { grid-column: 1; grid-row: auto; }
     .skills { grid-template-columns: 1fr; gap: 2px; }
     .skills dd { margin-bottom: 10px; }
     section { margin-top: 48px; }
@@ -155,58 +190,71 @@
 
   <section>
     <h2>Current Research</h2>
-    <div class="research-head">
-      <div class="research-title">Cross-Embodiment Adaptation of VLA Policies: Reproducing DART on Franka Panda → xArm7<span class="badge">Ongoing</span></div>
-      <div class="date">Fall 2026 – Present</div>
-    </div>
-    <p class="research-desc">
-      I am reproducing <b>DART</b> (ECCV 2026), which adapts a Vision-Language-Action policy to a new robot from a single demonstration
-      using weight arithmetic between source- and target-finetuned models. Starting from a π0.5 policy trained on the Franka Panda (LIBERO-Spatial),
-      I generated a one-shot xArm7 demonstration with MimicGen-style trajectory retargeting, fine-tuned source and target models,
-      and evaluated the composed policy on the xArm7 across held-out tasks.
-    </p>
-
-    <div class="research-grid">
-      <figure>
-        <video src="media/demo_pair.mp4" poster="media/demo_pair.jpg" controls muted loop playsinline preload="metadata"></video>
-        <figcaption><b>One-shot demonstration pair.</b> Left: original Franka Panda demo (source). Right: retargeted xArm7 demo (target). Top: agent view, bottom: wrist camera.</figcaption>
-      </figure>
-      <div class="results">
-        <h3>Success rate on held-out tasks (xArm7)</h3>
-        <p class="cap">LIBERO-Spatial t1–t9, 180 episodes over two runs</p>
-        <div class="bar"><div class="bar-label"><span>Pretrained policy (θ<sub>0</sub>)</span><span>56%</span></div><div class="bar-track"><div class="bar-fill" style="width:56%"></div></div></div>
-        <div class="bar"><div class="bar-label"><span>One-shot fine-tuning (θ<sub>tgt</sub>)</span><span>0%</span></div><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div></div>
-        <div class="bar hl"><div class="bar-label"><span>DART (θ*, α = 0.5)</span><span>73%</span></div><div class="bar-track"><div class="bar-fill" style="width:73%"></div></div></div>
-        <p class="foot">One-shot fine-tuning overfits to the demonstration trajectory and fails on every held-out task, while the DART-composed policy outperforms both baselines.</p>
+    <article class="rcard" id="rcard" tabindex="0" role="button" aria-expanded="false" aria-controls="rmore">
+      <div class="rsummary">
+        <div class="rthumb">
+          <img src="media/demo_pair.jpg" alt="Franka Panda and xArm7 performing the same pick-and-place task">
+          <video src="media/demo_pair.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
+        </div>
+        <div>
+          <div class="rmeta"><span class="badge">Ongoing</span><span>Fall 2026 – Present</span></div>
+          <h3 class="research-title">Cross-Embodiment Adaptation of VLA Policies: Reproducing DART on Franka Panda → xArm7</h3>
+          <p>
+            Transferring a π0.5 Vision-Language-Action policy trained on the Franka Panda to a new robot, the xArm7,
+            from a single demonstration by reproducing <b>DART</b> (ECCV 2026) on LIBERO-Spatial.
+          </p>
+          <div class="rhint">Click to see details ↓</div>
+        </div>
       </div>
-    </div>
 
-    <div class="compare-title">Same held-out task, three policies</div>
-    <p class="compare-sub">“Pick up the black bowl next to the ramekin and place it on the plate” · left: agent view, right: wrist camera</p>
-    <div class="compare">
-      <figure>
-        <video src="media/t1_pretrained.mp4" poster="media/t1_pretrained.jpg" autoplay muted loop playsinline preload="metadata"></video>
-        <figcaption><span class="status fail">FAIL</span><b>Pretrained</b> — reaches for the bowl but misses the grasp.</figcaption>
-      </figure>
-      <figure>
-        <video src="media/t1_oneshot_ft.mp4" poster="media/t1_oneshot_ft.jpg" autoplay muted loop playsinline preload="metadata"></video>
-        <figcaption><span class="status fail">FAIL</span><b>One-shot FT</b> — ignores the scene and replays the demo trajectory.</figcaption>
-      </figure>
-      <figure>
-        <video src="media/t1_dart.mp4" poster="media/t1_dart.jpg" autoplay muted loop playsinline preload="metadata"></video>
-        <figcaption><span class="status ok">SUCCESS</span><b>DART</b> — picks up the bowl and places it on the plate.</figcaption>
-      </figure>
-    </div>
+      <div class="rmore" id="rmore">
+        <div class="rmore-inner">
+          <div class="rmore-content">
+            <p class="research-desc">
+              DART builds a <b>domain vector</b> from the weight difference between a target-embodiment and a source-embodiment model,
+              each fine-tuned from one demonstration, and adds it to the base policy with SVD-based subspace alignment.
+              I generated a one-shot xArm7 demonstration by retargeting the Panda demo MimicGen-style (with rotation actions clipped to the training range),
+              fine-tuned the source and target models, and evaluated the composed policy on the xArm7 across held-out tasks.
+            </p>
+            <div class="results">
+                <h3>Success rate on held-out tasks (xArm7)</h3>
+                <p class="cap">LIBERO-Spatial t1–t9, 180 episodes over two runs</p>
+                <div class="bar"><div class="bar-label"><span>Pretrained policy (θ<sub>0</sub>)</span><span>56%</span></div><div class="bar-track"><div class="bar-fill" style="width:56%"></div></div></div>
+                <div class="bar"><div class="bar-label"><span>One-shot fine-tuning (θ<sub>tgt</sub>)</span><span>0%</span></div><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div></div>
+                <div class="bar hl"><div class="bar-label"><span>DART (θ*, α = 0.5)</span><span>73%</span></div><div class="bar-track"><div class="bar-fill" style="width:73%"></div></div></div>
+                <p class="foot">One-shot fine-tuning overfits to the demonstration trajectory and fails on every held-out task, while the DART-composed policy outperforms both baselines. Note: α was selected using these evaluation tasks, so the DART number may be optimistic.</p>
+              </div>
+
+            <div class="compare-title">Same held-out task, three policies</div>
+            <p class="compare-sub">“Pick up the black bowl next to the ramekin and place it on the plate” · left: agent view, right: wrist camera</p>
+            <div class="compare">
+              <figure>
+                <video src="media/t1_pretrained.mp4" poster="media/t1_pretrained.jpg" muted loop playsinline preload="none" data-auto></video>
+                <figcaption><span class="status fail">FAIL</span><b>Pretrained</b> — reaches for the bowl but misses the grasp.</figcaption>
+              </figure>
+              <figure>
+                <video src="media/t1_oneshot_ft.mp4" poster="media/t1_oneshot_ft.jpg" muted loop playsinline preload="none" data-auto></video>
+                <figcaption><span class="status fail">FAIL</span><b>One-shot FT</b> — ignores the scene and replays the demo trajectory.</figcaption>
+              </figure>
+              <figure>
+                <video src="media/t1_dart.mp4" poster="media/t1_dart.jpg" muted loop playsinline preload="none" data-auto></video>
+                <figcaption><span class="status ok">SUCCESS</span><b>DART</b> — picks up the bowl and places it on the plate.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
   </section>
 
   <section>
     <h2>Education</h2>
-    <div class="item">
+    <div class="item big-logo">
       <div><span class="title">Gachon University</span><br><span class="org">B.S. in Artificial Intelligence</span></div>
-      <div class="date">Mar. 2024 – Present</div>
+      <div class="date">Mar. 2024 – Present<img class="org-logo round" src="media/gachon_logo.png" alt="Gachon University"></div>
       <div class="detail">
         <ul>
-          <li>GPA 4.19 / 4.5 (Class rank 31 / 235)</li>
+          <li>GPA 4.19 / 4.5 (Percentage: 96.90 / 100)</li>
           <li>Academic Excellence Scholarship, National Program of Excellence in Software (2024)</li>
           <li>Credit Exchange Program, Seoul National University</li>
           <li>Silicon Valley AI/AX Technology Program, San Jose State University, USA (July 2026; one of 5 selected students, fully funded)</li>
@@ -219,7 +267,7 @@
     <h2>Research Experience</h2>
     <div class="item">
       <div><span class="title">Undergraduate Research Intern</span><br><span class="org">Seoul National University · Advisor: Dr. Namjoon Kim</span></div>
-      <div class="date">Feb. 2026 – Present</div>
+      <div class="date">Feb. 2026 – Present<img class="org-logo" src="media/snu_logo.png" alt="Seoul National University"></div>
       <div class="detail">
         <ul>
           <li>Undergraduate research on robotics, multimodal AI, and embedded AI systems.</li>
@@ -229,7 +277,7 @@
     </div>
     <div class="item">
       <div><span class="title">Undergraduate Research Assistant</span><br><span class="org">ISSR Lab, Gachon University</span></div>
-      <div class="date">May 2025 – Nov. 2025</div>
+      <div class="date">May 2025 – Nov. 2025<img class="org-logo" src="media/issr_logo.png" alt="Intelligent System Software Research Lab (ISSR)"></div>
       <div class="detail">
         <ul>
           <li>Undergraduate research on the Python debugger and CPython debugging environment.</li>
@@ -274,5 +322,56 @@
 
   <footer>© 2026 Hayeon Lee · Last updated Oct. 2026</footer>
 </main>
+<script>
+(function () {
+  var card = document.getElementById('rcard');
+  if (!card) return;
+  var hint = card.querySelector('.rhint');
+  var thumbVid = card.querySelector('.rthumb video');
+  var autoVids = card.querySelectorAll('video[data-auto]');
+
+  if (thumbVid) thumbVid.addEventListener('playing', function () { thumbVid.classList.add('playing'); });
+  function play(v) { try { var p = v.play(); if (p && p.catch) p.catch(function () {}); } catch (e) {} }
+
+  function setOpen(open) {
+    card.classList.toggle('open', open);
+    card.setAttribute('aria-expanded', open);
+    if (hint) hint.textContent = open ? 'Click to collapse ↑' : 'Click to see details ↓';
+    if (open) { if (thumbVid) play(thumbVid); autoVids.forEach(play); }
+    else {
+      if (thumbVid) { thumbVid.pause(); thumbVid.classList.remove('playing'); }
+      autoVids.forEach(function (v) { v.pause(); });
+    }
+  }
+
+  // Click on the card toggles it (links and video controls keep working normally)
+  card.addEventListener('click', function (e) {
+    if (e.target.closest('a, button, video[controls]')) return;
+    setOpen(!card.classList.contains('open'));
+  });
+  // Click anywhere outside the card closes it
+  document.addEventListener('click', function (e) {
+    if (card.classList.contains('open') && !card.contains(e.target)) setOpen(false);
+  });
+  // Keyboard: Enter/Space toggles, Escape closes
+  card.addEventListener('keydown', function (e) {
+    if (e.target !== card) return;
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpen(!card.classList.contains('open')); }
+    if (e.key === 'Escape') setOpen(false);
+  });
+})();
+</script>
+<script>
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+  document.documentElement.classList.add('js-reveal');
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('main section').forEach(function (s) { io.observe(s); });
+})();
+</script>
 </body>
 </html>
